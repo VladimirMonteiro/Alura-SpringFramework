@@ -7,11 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springframework" />
+        <module name="adopet-api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="adopet-api" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="adopet-api" options="-parameters" />
       <module name="springframework" options="-parameters" />
     </option>
   </component>
