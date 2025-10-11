@@ -8,4 +8,6 @@ import java.util.List;
 public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     List<Serie> findTop5ByOrderByAvaliacaoDesc();
+
+    List<Serie> findTop5ByOrderByEpisodiosDataLancamentoDesc();
 }

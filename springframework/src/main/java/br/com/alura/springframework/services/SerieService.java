@@ -24,6 +24,9 @@ public class SerieService {
     public List<SerieDTO> getTop5Series () {
         return convertToSerieDTO(serieRepository.findTop5ByOrderByAvaliacaoDesc());
     }
+    public List<SerieDTO> getLancamento () {
+        return convertToSerieDTO(serieRepository.findTop5ByOrderByAvaliacaoDesc());
+    }
 
     private List<SerieDTO> convertToSerieDTO (List<Serie> series) {
         return series.stream().map(s -> new SerieDTO(
