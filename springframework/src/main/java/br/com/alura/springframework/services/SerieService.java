@@ -6,6 +6,7 @@ import br.com.alura.springframework.repositories.SerieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,5 +40,17 @@ public class SerieService {
                 s.getPoster(),
                 s.getSinopse()
         )).collect(Collectors.toList());
+    }
+
+    public SerieDTO findById (Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+
+        if (serie.isPresent()) {
+            var s = serie.get();
+            return new SerieDTO(s.getId(), s.getTitulo(), s.getGenero(), s.getTotalTemporadas(),
+                    s.getAvaliacao(), s.getAtores(), s.getPoster(), s.getSinopse());
+        }
+
+        return null;
     }
 }
