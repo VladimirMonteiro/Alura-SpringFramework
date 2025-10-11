@@ -1,5 +1,6 @@
 package br.com.alura.springframework.services;
 
+import br.com.alura.springframework.dto.EpisodioDTO;
 import br.com.alura.springframework.dto.SerieDTO;
 import br.com.alura.springframework.models.Serie;
 import br.com.alura.springframework.repositories.SerieRepository;
@@ -49,6 +50,18 @@ public class SerieService {
             var s = serie.get();
             return new SerieDTO(s.getId(), s.getTitulo(), s.getGenero(), s.getTotalTemporadas(),
                     s.getAvaliacao(), s.getAtores(), s.getPoster(), s.getSinopse());
+        }
+
+        return null;
+    }
+
+    public List<EpisodioDTO> getAllTemporadas (Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+
+        if (serie.isPresent()) {
+            var s = serie.get();
+            return s.getEpisodios().stream()
+                    .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo())).toList();
         }
 
         return null;

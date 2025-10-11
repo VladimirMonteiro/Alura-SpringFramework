@@ -1,7 +1,7 @@
 package br.com.alura.springframework.controllers;
 
+import br.com.alura.springframework.dto.EpisodioDTO;
 import br.com.alura.springframework.dto.SerieDTO;
-import br.com.alura.springframework.repositories.SerieRepository;
 import br.com.alura.springframework.services.SerieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +36,11 @@ public class SerieController {
     @GetMapping("/{id}")
     public SerieDTO findById(@PathVariable("id") Long id) {
         return serieService.findById(id);
+    }
+
+    @GetMapping("/{id}/temporadas/todas")
+    public List<EpisodioDTO> getAllTemporadas (@PathVariable("id") Long id) {
+        return serieService.getAllTemporadas(id);
     }
 
 }
