@@ -2,6 +2,7 @@ package br.com.alura.springframework.controllers;
 
 import br.com.alura.springframework.dto.SerieDTO;
 import br.com.alura.springframework.repositories.SerieRepository;
+import br.com.alura.springframework.services.SerieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,18 +15,16 @@ import java.util.List;
 public class SerieController {
 
     @Autowired
-    private SerieRepository serieRepository;
+    private SerieService serieService;
 
     @GetMapping
     public List<SerieDTO> obterSeries () {
-        return serieRepository.findAll()
-                .stream().map(s -> new SerieDTO(s.getId(),
-                        s.getTitulo(), s.getGenero(),
-                        s.getTotalTemporadas(),
-                        s.getAvaliacao(),
-                        s.getAtores(),
-                        s.getPoster(),
-                        s.getSinopse())).toList();
+       return serieService.findAll();
+    }
+
+    @GetMapping("/home")
+    public String test(){
+        return "Bem vindo ao test";
     }
 
 }
