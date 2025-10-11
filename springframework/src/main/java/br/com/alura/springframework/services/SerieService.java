@@ -1,10 +1,12 @@
 package br.com.alura.springframework.services;
 
 import br.com.alura.springframework.dto.SerieDTO;
+import br.com.alura.springframework.models.Serie;
 import br.com.alura.springframework.repositories.SerieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SerieService {
@@ -16,7 +18,15 @@ public class SerieService {
     }
 
     public List<SerieDTO> findAll() {
-        return serieRepository.findAll().stream().map(s -> new SerieDTO(
+        return convertToSerieDTO(serieRepository.findAll());
+    }
+
+    public List<SerieDTO> getTop5Series () {
+        return convertToSerieDTO(serieRepository.findTop5ByOrderByAvaliacaoDesc());
+    }
+
+    private List<SerieDTO> convertToSerieDTO (List<Serie> series) {
+        return series.stream().map(s -> new SerieDTO(
                 s.getId(),
                 s.getTitulo(),
                 s.getGenero(),
@@ -25,6 +35,6 @@ public class SerieService {
                 s.getAtores(),
                 s.getPoster(),
                 s.getSinopse()
-        )).toList();
+        )).collect(Collectors.toList());
     }
 }

@@ -22,9 +22,9 @@ public class SerieController {
        return serieService.findAll();
     }
 
-    @GetMapping("/home")
-    public String test(){
-        return "Bem vindo ao test";
+    @GetMapping("/top5")
+    public List<SerieDTO> getTop5Series(){
+        return serieService.getTop5Series();
     }
 
 }
