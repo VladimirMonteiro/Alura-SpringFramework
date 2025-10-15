@@ -1,5 +1,8 @@
 package br.com.alura.adopet.api.services;
 
+import br.com.alura.adopet.api.dto.AprovacaoAdocaoDto;
+import br.com.alura.adopet.api.dto.ReprovacaoAdocaoDto;
+import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.model.StatusAdocao;
@@ -22,7 +25,7 @@ public class AdocaoService {
     private EmailService emailService;
 
 
-    public void solicitar (Adocao adocao) {
+    public void solicitar (SolicitacaoAdocaoDto dto) {
         if (adocao.getPet().getAdotado() == true) {
             throw new ValidacaoException("Pet já foi adotado.");
         } else {
@@ -54,13 +57,13 @@ public class AdocaoService {
         emailService.enviarEmail(adocao.getPet().getAbrigo().getEmail(), "Solicitação de adoção", "Parabéns " + adocao.getTutor().getNome() + "!\n\nSua adoção do pet " + adocao.getPet().getNome() + ", solicitada em " + adocao.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + ", foi aprovada.\nFavor entrar em contato com o abrigo " + adocao.getPet().getAbrigo().getNome() + " para agendar a busca do seu pet.");
     }
 
-    public void aprovar (Adocao adocao) {
+    public void aprovar (AprovacaoAdocaoDto dto) {
         adocao.setStatus(StatusAdocao.APROVADO);
         repository.save(adocao);
         emailService.enviarEmail(adocao.getPet().getAbrigo().getEmail(), "Solicitação aprovada!", "Parabéns " +adocao.getTutor().getNome() +"!\n\nSua adoção do pet " +adocao.getPet().getNome() +", solicitada em " +adocao.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) +", foi aprovada.\nFavor entrar em contato com o abrigo " +adocao.getPet().getAbrigo().getNome() +" para agendar a busca do seu pet.");
     }
 
-    public void reprovar (Adocao adocao) {
+    public void reprovar (ReprovacaoAdocaoDto dto) {
         adocao.setStatus(StatusAdocao.REPROVADO);
         repository.save(adocao);
 
