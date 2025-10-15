@@ -1,6 +1,7 @@
 package br.com.alura.adopet.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -24,6 +25,17 @@ public class Adocao {
     @Enumerated(EnumType.STRING)
     private StatusAdocao status;
     private String justificativaStatus;
+
+    public Adocao () {
+    }
+
+    public Adocao (Tutor tutor, Pet pet, String motivo) {
+        this.tutor = tutor;
+        this.pet = pet;
+        this.motivo = motivo;
+        this.status = StatusAdocao.AGUARDANDO_AVALIACAO;
+        this.data = LocalDateTime.now();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -92,5 +104,14 @@ public class Adocao {
 
     public void setJustificativaStatus(String justificativaStatus) {
         this.justificativaStatus = justificativaStatus;
+    }
+
+    public void marcarComoAprovada () {
+        this.status = StatusAdocao.APROVADO;
+    }
+
+    public void marcarComoReprovada (@NotBlank String justificativa) {
+        this.status = StatusAdocao.REPROVADO;
+        this.justificativaStatus = justificativa;
     }
 }
